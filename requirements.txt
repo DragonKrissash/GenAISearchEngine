@@ -30,3 +30,4 @@ langchain-ollama
 fastapi
 uvicorn
 langserve
+ddgs

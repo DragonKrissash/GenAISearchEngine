@@ -8,7 +8,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-os.environ['GROQ_API_KEY']=os.getenv('GROQ_API_KEY')
+os.environ['GROQ_API_KEY']='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'
 arxiv_wrapper=ArxivAPIWrapper(top_k_results=1,doc_content_chars_max=200)
 arxiv=ArxivQueryRun(api_wrapper=arxiv_wrapper)
 wiki_wrapper=WikipediaAPIWrapper(top_k_results=1,doc_content_chars_max=200)

@@ -4,9 +4,24 @@ from langchain_community.utilities import ArxivAPIWrapper,WikipediaAPIWrapper
 from langchain_community.tools import ArxivQueryRun,WikipediaQueryRun,DuckDuckGoSearchRun
 from langchain_classic.agents import initialize_agent,AgentType
 from langchain_classic.callbacks import StreamlitCallbackHandler
+from langchain_core.tools import BaseTool
 import os
 from dotenv import load_dotenv
 load_dotenv()
+
+class SafeTool(BaseTool):
+    name: str
+    description: str
+    tool: object
+
+    def _run(self, query: str):
+        try:
+            return self.tool.run(query)
+        except Exception as e:
+            return f"[SafeTool error]: {str(e)}"
+
+    def _arun(self, query: str):
+        raise NotImplementedError()
 
 os.environ['GROQ_API_KEY']=os.getenv('GROQ_API_KEY')
 arxiv=ArxivQueryRun()
@@ -14,17 +29,23 @@ wiki_wrapper=WikipediaAPIWrapper(top_k_results=3,doc_content_chars_max=500)
 wiki=WikipediaQueryRun(api_wrapper=wiki_wrapper)
 ddg=DuckDuckGoSearchRun()
 
-def safe_tool(tool):
-    def wrapper(query):
-        try:
-            return tool.run(query)
-        except Exception as e:
-            return f"[Tool failed safely]: {str(e)}"
-    return wrapper
+ddg_safe = SafeTool(
+    name="duckduckgo_search",
+    description="Search the web using DuckDuckGo",
+    tool=ddg
+)
 
-ddg_safe = safe_tool(ddg)
-wiki_safe = safe_tool(wiki)
-arxiv_safe = safe_tool(arxiv)
+wiki_safe = SafeTool(
+    name="wikipedia_search",
+    description="Search Wikipedia",
+    tool=wiki
+)
+
+arxiv_safe = SafeTool(
+    name="arxiv_search",
+    description="Search academic papers",
+    tool=arxiv
+)
 
 st.title('Langchain - Search with title')
 

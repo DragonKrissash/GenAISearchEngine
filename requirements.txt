@@ -11,9 +11,9 @@ python-dotenv
 langchain_community
 pypdf
 bs4
-arxiv
+arxiv==1.4.7
 pymupdf
-wikipedia
+wikipedia==1.4.0
 langchain-text-splitters
 langchain-openai
 chromadb
@@ -30,4 +30,4 @@ langchain-ollama
 fastapi
 uvicorn
 langserve
-ddgs
+duckduckgo-search==5.3.0

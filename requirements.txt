@@ -31,3 +31,4 @@ fastapi
 uvicorn
 langserve
 duckduckgo-search==5.3.0
+ddgs

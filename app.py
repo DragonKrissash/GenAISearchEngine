@@ -51,7 +51,7 @@ st.title('Langchain - Search with title')
 
 if 'messages' not in st.session_state:
     st.session_state['messages']=[
-        {'role':'assisstant','content':'Hi! I am a chatbot. How can I help you?'}
+        {'role':'assistant','content':'Hi! I am a chatbot. How can I help you?'}
     ]
 
 for msg in st.session_state.messages:

@@ -65,7 +65,7 @@ if prompt:=st.chat_input(placeholder='What is machine learning'):
     search_agent=initialize_agent(tools,llm,agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,handle_parsing_errors=True,verbose=True)
  
     with st.chat_message('assistant'):
-        st_cb=StreamlitCallbackHandler(st.container(),expand_new_thoughts=False)
+        st_cb=StreamlitCallbackHandler(st.container(),expand_new_thoughts=True)
         user_input = st.session_state.messages[-1]["content"]
         response = search_agent.run(user_input,callbacks=[st_cb])
         st.session_state.messages.append({'role':'assistant','content':response})
